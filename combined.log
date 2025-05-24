@@ -1,0 +1,273 @@
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T06:03:24.767Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T06:03:24.776Z"}
+{"level":"error","message":"MulterError: Unexpected field\n    at wrappedFileFilter (H:\\E-Commerece Website\\server\\node_modules\\multer\\index.js:40:19)\n    at Multipart.<anonymous> (H:\\E-Commerece Website\\server\\node_modules\\multer\\lib\\make-middleware.js:109:7)\n    at Multipart.emit (node:events:524:28)\n    at HeaderParser.cb (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:572:12)","timestamp":"2025-04-29T06:04:43.350Z"}
+{"level":"error","message":"MulterError: Unexpected field\n    at wrappedFileFilter (H:\\E-Commerece Website\\server\\node_modules\\multer\\index.js:40:19)\n    at Multipart.<anonymous> (H:\\E-Commerece Website\\server\\node_modules\\multer\\lib\\make-middleware.js:109:7)\n    at Multipart.emit (node:events:524:28)\n    at HeaderParser.cb (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:572:12)","timestamp":"2025-04-29T06:05:36.685Z"}
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T09:12:14.239Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T09:12:14.415Z"}
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T09:12:14.519Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T09:12:14.547Z"}
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T09:12:14.555Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T09:12:14.557Z"}
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T09:12:15.084Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T09:12:15.086Z"}
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T09:12:15.153Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T09:12:15.154Z"}
+{"level":"error","message":"Auth error: jwt expired","timestamp":"2025-04-29T09:12:15.172Z"}
+{"level":"error","message":"TokenExpiredError: jwt expired\n    at H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (H:\\E-Commerece Website\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at exports.protect (H:\\E-Commerece Website\\server\\middleware\\auth.js:88:25)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (H:\\E-Commerece Website\\server\\node_modules\\router\\lib\\layer.js:152:17)\n    at H:\\E-Commerece Website\\server\\node_modules\\router\\index.js:295:15","timestamp":"2025-04-29T09:12:15.173Z"}
+{"level":"error","message":"MulterError: Unexpected field\n    at wrappedFileFilter (H:\\E-Commerece Website\\server\\node_modules\\multer\\index.js:40:19)\n    at Multipart.<anonymous> (H:\\E-Commerece Website\\server\\node_modules\\multer\\lib\\make-middleware.js:109:7)\n    at Multipart.emit (node:events:524:28)\n    at HeaderParser.cb (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:572:12)","timestamp":"2025-05-12T05:08:02.784Z"}
+{"level":"error","message":"MulterError: Unexpected field\n    at wrappedFileFilter (H:\\E-Commerece Website\\server\\node_modules\\multer\\index.js:40:19)\n    at Multipart.<anonymous> (H:\\E-Commerece Website\\server\\node_modules\\multer\\lib\\make-middleware.js:109:7)\n    at Multipart.emit (node:events:524:28)\n    at HeaderParser.cb (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (H:\\E-Commerece Website\\server\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (H:\\E-Commerece Website\\server\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:572:12)","timestamp":"2025-05-12T05:33:50.466Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T11:58:25.328Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T11:58:25.388Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T11:58:25.405Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T11:58:42.361Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T11:58:42.374Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T11:58:42.409Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T11:58:42.595Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T11:58:42.653Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T11:58:42.690Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:09:59.474Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:09:59.667Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:10:00.332Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:10:00.698Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:10:00.822Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:10:01.369Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:10:13.211Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:10:14.314Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:10:14.331Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:10:14.973Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:10:15.317Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:10:15.333Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:10:56.010Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:10:56.058Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:10:59.655Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:10:59.717Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:10:59.770Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:11:03.166Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:11:03.484Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:11:03.528Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:11:04.272Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:11:04.315Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:11:04.335Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:19:51.782Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:19:52.406Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:19:52.520Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:19:57.441Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:19:57.591Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:36.728Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:36.866Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:37.131Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:37.184Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:37.282Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:47.074Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:20:47.432Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:22:00.924Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:22:01.072Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:22:26.338Z"}
+{"level":"error","message":"Error fetching order: Cast to ObjectId failed for value \":id\" (type string) at path \"_id\" for model \"Order\"","timestamp":"2025-05-23T12:23:40.230Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-23T12:23:40.501Z"}
+{"level":"error","message":"Error fetching order: Cast to ObjectId failed for value \":id\" (type string) at path \"_id\" for model \"Order\"","timestamp":"2025-05-23T12:23:40.529Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:09.855Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:10.333Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:24:10.411Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:24:10.417Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:24:10.437Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:10.684Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T12:24:10.716Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T12:24:10.719Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T12:24:10.755Z"}
+{"level":"error","message":"Error fetching order: Cast to ObjectId failed for value \":id\" (type string) at path \"_id\" for model \"Order\"","timestamp":"2025-05-23T12:24:13.166Z"}
+{"level":"error","message":"Error fetching order: Cast to ObjectId failed for value \":id\" (type string) at path \"_id\" for model \"Order\"","timestamp":"2025-05-23T12:24:13.290Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:13.333Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:13.402Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:18.517Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:18.704Z"}
+{"level":"error","message":"Error fetching order: Cast to ObjectId failed for value \":id\" (type string) at path \"_id\" for model \"Order\"","timestamp":"2025-05-23T12:24:28.787Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:28.835Z"}
+{"level":"error","message":"Error fetching order: Cast to ObjectId failed for value \":id\" (type string) at path \"_id\" for model \"Order\"","timestamp":"2025-05-23T12:24:28.935Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:41.879Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:42.008Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:45.924Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:24:46.558Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:25:21.071Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:37:42.834Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:37:50.540Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:37:50.625Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:37:56.556Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T12:37:56.874Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T16:55:30.272Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:03.567Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:03.621Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:03.735Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:03.744Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:03.814Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:03.820Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:13.832Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:13.872Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:14.098Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:14.148Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:23.943Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:24.014Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:24.183Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:24.212Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:44.870Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:44.878Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:44.931Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:44.935Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:57.332Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:57.335Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:58:57.404Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:58:57.410Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:01.987Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:59:02.022Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:02.267Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:59:02.303Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:05.240Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:59:05.264Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:05.405Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:59:05.413Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:06.973Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:59:06.989Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:07.337Z"}
+{"level":"info","message":"No cart found for user: 6830a91bc013e9b782fad188, returning empty cart","timestamp":"2025-05-23T16:59:07.354Z"}
+{"level":"info","message":"Item added to cart for user 6830a91bc013e9b782fad188: product=682c26ade920204a3c52042a, quantity=1","timestamp":"2025-05-23T16:59:10.321Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:10.471Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:18.420Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:18.516Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:35.490Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:35.573Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:35.627Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:35.687Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T16:59:35.744Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T17:00:08.397Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T17:00:08.489Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T17:00:12.174Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T17:00:12.469Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:02.792Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:02.859Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:02.900Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T17:02:15.958Z"}
+{"level":"info","message":"Fetching cart for user: 6830a91bc013e9b782fad188","timestamp":"2025-05-23T17:02:16.032Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:47.117Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:47.410Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T17:02:47.413Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T17:02:47.418Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T17:02:47.477Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T17:02:47.688Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T17:02:47.694Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:47.723Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T17:02:47.730Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:02:54.544Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T17:02:54.548Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T17:02:54.554Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T17:02:54.562Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T17:02:54.667Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T17:02:54.710Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T17:02:54.716Z"}
+{"level":"info","message":"Fetching cart for user: 68075f6b3ef7d525df78c0dd","timestamp":"2025-05-23T17:03:01.867Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T17:03:01.874Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T17:03:01.879Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T17:03:01.893Z"}
+{"level":"info","message":"Order count fetched: 0","timestamp":"2025-05-23T17:03:02.136Z"}
+{"level":"info","message":"Total sales fetched: 0","timestamp":"2025-05-23T17:03:02.138Z"}
+{"level":"info","message":"Product count fetched: 3","timestamp":"2025-05-23T17:03:02.145Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:05:32.965Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:05:32.970Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:05:33.068Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:05:33.071Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:05:33.100Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:05:33.104Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:05:37.775Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:05:37.779Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:06:19.472Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:06:19.476Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:06:19.510Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:06:19.513Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:06:32.687Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:06:32.711Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:06:32.826Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:06:32.896Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:34.251Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:34.256Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:34.283Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:34.287Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:38.837Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:38.870Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:49.801Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:49.805Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:49.830Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:49.834Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:52.692Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:52.707Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:55.335Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:55.341Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:55.389Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:55.393Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:57.321Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:57.325Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:17:57.350Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:17:57.353Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:00.056Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:00.136Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:24.046Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:24.056Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:24.109Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:24.120Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:30.513Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:30.523Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:30.590Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:30.606Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:42.145Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:42.152Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:42.189Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:42.198Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:51.223Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:51.237Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:18:51.310Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:18:51.324Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:19:33.475Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:19:33.484Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:19:33.544Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:19:33.560Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:19:58.822Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:19:58.834Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-23T17:19:58.979Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-23T17:19:59.010Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:07:48.291Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:07:48.442Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:17.359Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:17.392Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:25.107Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:25.124Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:28.671Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:28.694Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:31.781Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:31.807Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:33.559Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:33.579Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:36.697Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:36.732Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:40.809Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:40.813Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:43.364Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:43.378Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:46.687Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:46.710Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:11:53.240Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:11:53.270Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:12:28.337Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:12:28.353Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:12:29.963Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:12:29.974Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:12:34.063Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:12:34.067Z"}
+{"level":"info","message":"Fetching cart for user: 682ff743175b9b2d96b6d44c","timestamp":"2025-05-24T06:12:36.725Z"}
+{"level":"info","message":"No cart found for user: 682ff743175b9b2d96b6d44c, returning empty cart","timestamp":"2025-05-24T06:12:36.784Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:37.673Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:37.835Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:37.934Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:42.016Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:42.457Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:49.822Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:49.956Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:53.037Z"}
+{"level":"info","message":"Fetching cart for user: 68074d9f3ef7d525df78c0ca","timestamp":"2025-05-24T06:28:53.304Z"}
