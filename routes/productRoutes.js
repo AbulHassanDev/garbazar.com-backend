@@ -1,3 +1,4 @@
+
 const express = require("express");
 const router = express.Router();
 const {
@@ -7,8 +8,9 @@ const {
   updateProduct,
   deleteProduct,
   getFeaturedProducts,
+  getSeasonalProducts,
   getRelatedProducts,
-  getProductCount, // Add this
+  getProductCount,
 } = require("../controllers/productController");
 const { protect, authMiddleware } = require("../middleware/auth");
 const { uploadArray } = require("../utils/cloudinary");
@@ -17,9 +19,7 @@ const { uploadArray } = require("../utils/cloudinary");
 router.get("/", getProducts); // Fetch all products
 router.get("/count", protect, authMiddleware("admin"), getProductCount); // Fetch product count
 router.get("/featured", getFeaturedProducts); // Fetch featured products
-router.get("/seasonal", (req, res) => {
-  res.status(501).json({ message: "Seasonal products endpoint not implemented yet" });
-}); // Fetch seasonal products
+router.get("/seasonal", getSeasonalProducts); // Fetch seasonal products
 router.get("/:id", getProductById); // Fetch a single product by ID
 router.get("/:productId/related", getRelatedProducts); // Fetch related products
 

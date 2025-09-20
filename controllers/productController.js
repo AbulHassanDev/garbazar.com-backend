@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
@@ -104,6 +105,33 @@ const getFeaturedProducts = async (req, res) => {
   }
 };
 
+const getSeasonalProducts = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    console.log("Fetching seasonal products:", { page, limit });
+    const products = await Product.find({ seasonal: true, status: "active" })
+      .populate("category", "name slug")
+      .populate("subcategory", "name slug")
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .sort({ createdAt: -1 });
+
+    const total = await Product.countDocuments({ seasonal: true, status: "active" });
+    console.log("Total seasonal products:", total);
+
+    res.status(200).json({
+      products,
+      total,
+      page: parseInt(page),
+      limit: parseInt(limit),
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    console.error("Error fetching seasonal products:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -177,6 +205,7 @@ const addProduct = async (req, res) => {
       brand,
       specifications,
       featured,
+      seasonal,
       status,
     } = req.body;
 
@@ -235,6 +264,7 @@ const addProduct = async (req, res) => {
       images,
       specifications: parsedSpecifications,
       featured: featured === "true" || featured === true,
+      seasonal: seasonal === "true" || seasonal === true,
       status: status || "active",
     });
 
@@ -276,6 +306,7 @@ const updateProduct = async (req, res) => {
       brand,
       specifications,
       featured,
+      seasonal,
       status,
       existingImages,
     } = req.body;
@@ -372,6 +403,7 @@ const updateProduct = async (req, res) => {
     product.images = images;
     product.specifications = parsedSpecifications;
     product.featured = featured !== undefined ? featured === "true" || featured === true : product.featured;
+    product.seasonal = seasonal !== undefined ? seasonal === "true" || seasonal === true : product.seasonal;
     product.status = status || product.status;
 
     const updatedProduct = await product.save();
@@ -435,6 +467,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getFeaturedProducts,
+  getSeasonalProducts,
   getRelatedProducts,
   getProductCount,
 };

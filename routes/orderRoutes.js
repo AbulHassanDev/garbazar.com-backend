@@ -1,19 +1,33 @@
 
 const express = require("express");
 const router = express.Router();
-const { getOrders, getOrderById, getUserOrders, addOrder, updateOrder, deleteOrder, getOrderCount, getTotalSales, validateOrder } = require("../controllers/orderController");
-const { protect, authMiddleware } = require("../middleware/auth");
+const {
+  createCheckoutOrder,
+  getOrders,
+  getOrderById,
+  getUserOrders,
+  updateOrder,
+  deleteOrder,
+  getOrderCount,
+  getTotalSales,
+  updatePayment,
+  validateOrder,
+  getUserProfile,
+  addOrder,
+} = require("../controllers/orderController");
+const { protect } = require("../middleware/auth");
 
-// Admin routes
-router.get("/count", protect, authMiddleware("admin"), getOrderCount); // Get total order count
-router.get("/total-sales", protect, authMiddleware("admin"), getTotalSales); // Get total sales
-router.post("/", protect, authMiddleware("admin"), validateOrder, addOrder); // Add a new order
-router.put("/:id", protect, authMiddleware("admin"), validateOrder, updateOrder); // Update an order
-router.delete("/:id", protect, authMiddleware("admin"), deleteOrder); // Delete an order
+router.post("/checkout", protect, validateOrder, createCheckoutOrder);
+router.post("/update-payment", protect, updatePayment);
 
-// Public routes (authenticated users)
-router.get("/", protect, getOrders); // Fetch orders with pagination and search
-router.get("/user", protect, getUserOrders); // Fetch orders for the logged-in user
-router.get("/:id", protect, getOrderById); // Fetch a single order by ID
+router.get("/", protect, getOrders);
+router.get("/user", protect, getUserOrders);
+router.get("/user/profile", protect, getUserProfile);
+router.get("/count", protect, getOrderCount);
+router.get("/total-sales", protect, getTotalSales);
+
+router.get("/:id", protect, getOrderById);
+router.put("/:id", protect, updateOrder);
+router.delete("/:id", protect, deleteOrder);
 
 module.exports = router;

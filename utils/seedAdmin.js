@@ -5,7 +5,7 @@ const User = require("../models/User");
 const seedAdmin = async () => {
   try {
     // Check if the admin user already exists
-    const existingUser = await User.findOne({ email: "admin@alfatah.com" });
+    const existingUser = await User.findOne({ email: "admin@garbazar.com" });
     if (existingUser) {
       console.log("Admin user already exists:", existingUser);
       return;

@@ -1,3 +1,4 @@
+
 const Cart = require("../models/Cart");
 const Product = require("../models/Product");
 const logger = require("../utils/logger");
@@ -42,8 +43,12 @@ exports.addToCart = async (req, res) => {
 
     await cart.save();
     const populatedCart = await Cart.findOne({ userId }).populate("items.productId");
+    // Filter out invalid items (null productId or inactive product)
+    const validItems = populatedCart.items.filter(
+      (item) => item.productId && item.productId.status === "active"
+    );
     logger.info(`Item added to cart for user ${userId}: product=${productId}, quantity=${quantity}`);
-    res.status(200).json({ message: "Item added to cart", cart: populatedCart.items });
+    res.status(200).json({ message: "Item added to cart", cart: validItems });
   } catch (error) {
     logger.error(`Error adding to cart: ${error.message}, stack: ${error.stack}`);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -61,7 +66,11 @@ exports.getCart = async (req, res) => {
       return res.status(200).json({ cart: [] });
     }
 
-    res.status(200).json({ cart: cart.items });
+    // Filter out invalid items (null productId or inactive product)
+    const validItems = cart.items.filter(
+      (item) => item.productId && item.productId.status === "active"
+    );
+    res.status(200).json({ cart: validItems });
   } catch (error) {
     logger.error(`Error fetching cart: ${error.message}, stack: ${error.stack}`);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -108,8 +117,12 @@ exports.updateCartItem = async (req, res) => {
 
     await cart.save();
     const populatedCart = await Cart.findOne({ userId }).populate("items.productId");
+    // Filter out invalid items
+    const validItems = populatedCart.items.filter(
+      (item) => item.productId && item.productId.status === "active"
+    );
     logger.info(`Cart updated for user ${userId}: product=${productId}, quantity=${quantity}`);
-    res.status(200).json({ message: "Cart updated", cart: populatedCart.items });
+    res.status(200).json({ message: "Cart updated", cart: validItems });
   } catch (error) {
     logger.error(`Error updating cart: ${error.message}, stack: ${error.stack}`);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -130,8 +143,12 @@ exports.removeCartItem = async (req, res) => {
     cart.items = cart.items.filter((item) => item.productId.toString() !== productId);
     await cart.save();
     const populatedCart = await Cart.findOne({ userId }).populate("items.productId");
+    // Filter out invalid items
+    const validItems = populatedCart.items.filter(
+      (item) => item.productId && item.productId.status === "active"
+    );
     logger.info(`Item removed from cart for user ${userId}: product=${productId}`);
-    res.status(200).json({ message: "Item removed from cart", cart: populatedCart.items });
+    res.status(200).json({ message: "Item removed from cart", cart: validItems });
   } catch (error) {
     logger.error(`Error removing from cart: ${error.message}, stack: ${error.stack}`);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -151,7 +168,7 @@ exports.clearCart = async (req, res) => {
     cart.items = [];
     await cart.save();
     logger.info(`Cart cleared for user: ${userId}`);
-    res.status(200).json({ message: "Cart cleared", cart: cart.items });
+    res.status(200).json({ message: "Cart cleared", cart: [] });
   } catch (error) {
     logger.error(`Error clearing cart: ${error.message}, stack: ${error.stack}`);
     res.status(500).json({ message: "Server error", error: error.message });

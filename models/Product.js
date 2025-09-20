@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const specificationSchema = new mongoose.Schema({
@@ -77,6 +78,10 @@ const productSchema = new mongoose.Schema({
   ],
   specifications: [specificationSchema],
   featured: {
+    type: Boolean,
+    default: false,
+  },
+  seasonal: {
     type: Boolean,
     default: false,
   },

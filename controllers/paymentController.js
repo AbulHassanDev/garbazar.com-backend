@@ -1,138 +1,223 @@
-// controllers/paymentController.js
+
+const Order = require("../models/Order");
 const User = require("../models/User");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const logger = require("../utils/logger");
+const { sendOrderConfirmationEmail } = require("../utils/email");
 
-const initiatePayment = async (req, res) => {
-  const { membershipType, easypaisaNumber } = req.body;
-  const userId = req.user._id;
-
-  console.log("Initiate payment - User ID:", userId);
-  console.log("Initiate payment - Membership Type:", membershipType);
-  console.log("Initiate payment - EasyPaisa Number:", easypaisaNumber);
-
+const createPaymentIntent = async (req, res) => {
   try {
-    if (!["monthly", "annual"].includes(membershipType)) {
-      console.log("Invalid membership type:", membershipType);
-      return res.status(400).json({ message: "Invalid membership type" });
-    }
+    const { orderId, amount } = req.body;
+    const userId = req.user._id;
 
-    const user = await User.findById(userId);
-    if (!user) {
-      console.log("User not found for ID:", userId);
-      return res.status(404).json({ message: "User not found" });
-    }
+    logger.info(`Creating payment intent for order ${orderId} at ${new Date().toISOString()}`, { amount, userId });
 
-    if (user.type === "pro") {
-      console.log("User is already a pro member:", userId);
-      return res.status(400).json({ message: "User is already a pro member" });
-    }
-
-    if (user.membership?.paymentStatus === "pending") {
-      console.log("User has a pending payment:", user.membership.orderRefNum);
+    if (!orderId || amount == null) {
       return res.status(400).json({
-        message: "A payment is already pending for this user",
-        orderRefNum: user.membership.orderRefNum,
+        success: false,
+        message: "Missing required fields (orderId or amount)",
       });
     }
 
-    const amount = membershipType === "annual" ? 4999 : 499;
-    const transactionId = `TXN-${Date.now()}-${userId}`;
-    const orderRefNum = `ORD-${Date.now()}-${userId}`;
+    const paymentAmount = Number(amount);
+    if (isNaN(paymentAmount) || paymentAmount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid amount provided",
+      });
+    }
 
-    console.log("Payment data:", { amount, transactionId, orderRefNum });
+    const order = await Order.findOne({ _id: orderId, user: userId });
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
 
-    console.log("Updating user membership:", { membershipType, orderRefNum });
-    user.membership = {
-      isPro: false,
-      membershipType,
-      startDate: new Date(),
-      endDate: new Date(
-        Date.now() + (membershipType === "annual" ? 365 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000)
-      ),
-      paymentStatus: "pending",
-      orderRefNum,
-    };
+    if (order.paymentStatus === "Completed") {
+      return res.status(400).json({
+        success: false,
+        message: "Order is already paid",
+      });
+    }
 
-    await user.save();
-    console.log("User saved successfully:", user);
+    const currency = "pkr";
+    const finalAmount = Math.round(paymentAmount * 100);
+    logger.info(`Final amount for Stripe: ${finalAmount} paisa`);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: finalAmount,
+      currency: currency,
+      metadata: {
+        userId: userId.toString(),
+        orderId: orderId.toString(),
+        orderNumber: order.orderNumber,
+      },
+      description: `Order #${order.orderNumber}`,
+    });
+
+    logger.info(`Stripe payment intent created at ${new Date().toISOString()}`, { id: paymentIntent.id, status: paymentIntent.status });
+
+    order.paymentDetails.intentId = paymentIntent.id;
+    order.paymentDetails.status = "Pending";
+    await order.save();
 
     res.status(200).json({
-      orderRefNum,
-      transactionId,
-      paymentUrl: "http://localhost:5173/membership/mock-payment",
+      success: true,
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+      currency: currency,
     });
   } catch (error) {
-    console.error("Payment initiation error:", error.message, error.stack);
-    res.status(500).json({ message: "Server error", error: error.message });
+    logger.error(`Payment intent creation error at ${new Date().toISOString()}`, { message: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: "Payment processing failed",
+      error: error.message,
+    });
   }
 };
 
-const paymentCallback = async (req, res) => {
-  const { orderRefNum, transactionId, status } = req.body;
-
-  console.log("Payment callback - Data:", { orderRefNum, transactionId, status });
-
+const createMembershipPaymentIntent = async (req, res) => {
   try {
-    const allUsers = await User.find({});
-    console.log(
-      "All users in DB:",
-      allUsers.map((u) => ({
-        email: u.email,
-        membership: u.membership,
-      }))
-    );
+    const { membershipType, email } = req.body;
+    const userId = req.user._id;
 
-    console.log("Querying for user with orderRefNum:", orderRefNum);
-    const user = await User.findOne({ "membership.orderRefNum": orderRefNum });
-    if (!user) {
-      console.log("User not found for orderRefNum:", orderRefNum);
-      return res.status(404).json({ message: "User not found" });
-    }
+    logger.info(`Creating membership payment intent for user ${userId} at ${new Date().toISOString()}`, { membershipType });
 
-    console.log("User found:", { email: user.email, orderRefNum: user.membership.orderRefNum });
-
-    if (status === "completed") {
-      user.type = "pro";
-      user.membership.isPro = true;
-      user.membership.paymentStatus = "completed";
-      await user.save();
-      console.log("User upgraded to pro:", { email: user.email, type: user.type });
-      res.status(200).json({
-        message: "Payment successful, membership upgraded",
-        redirectUrl: "http://localhost:5173/membership/success",
+    if (!membershipType || !["monthly", "annual"].includes(membershipType)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or missing membership type",
       });
-    } else {
-      user.membership.paymentStatus = "failed";
-      await user.save();
-      console.log("Payment failed for user:", { email: user.email });
-      res.status(400).json({ message: "Payment failed" });
     }
-  } catch (error) {
-    console.error("Payment callback error:", error.message, error.stack);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-};
 
-const resetMembership = async (req, res) => {
-  const userId = req.user._id;
-
-  console.log("Reset membership - User ID:", userId);
-
-  try {
     const user = await User.findById(userId);
     if (!user) {
-      console.log("User not found for ID:", userId);
+      logger.warn(`User not found at ${new Date().toISOString()}: ${userId}`);
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.membership = {};
-    await user.save();
-    console.log("Membership reset for user:", user.email);
+    if (user.membership?.isPro && user.membership?.endDate > new Date()) {
+      return res.status(400).json({
+        success: false,
+        message: "User already has an active membership",
+      });
+    }
 
-    res.status(200).json({ message: "Membership reset successfully" });
+    const amount = membershipType === "annual" ? 499900 : 49900; // Rs.4,999 or Rs.499 in cents
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "pkr",
+      metadata: {
+        userId: userId.toString(),
+        membershipType,
+      },
+      description: `${membershipType.charAt(0).toUpperCase() + membershipType.slice(1)} Membership`,
+      receipt_email: email,
+    });
+
+    logger.info(`Stripe membership payment intent created at ${new Date().toISOString()}`, { id: paymentIntent.id });
+
+    res.status(200).json({
+      success: true,
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+    });
   } catch (error) {
-    console.error("Reset membership error:", error.message, error.stack);
-    res.status(500).json({ message: "Server error", error: error.message });
+    logger.error(`Membership payment intent creation error at ${new Date().toISOString()}`, { message: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: "Payment processing failed",
+      error: error.message,
+    });
   }
 };
 
-module.exports = { initiatePayment, paymentCallback, resetMembership };
+const confirmPayment = async (req, res) => {
+  try {
+    const { paymentIntentId, orderId } = req.body;
+    const userId = req.user._id;
+
+    logger.info(`Confirming payment ${paymentIntentId} for order ${orderId} at ${new Date().toISOString()}`);
+
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    if (paymentIntent.status !== "succeeded") {
+      return res.status(400).json({
+        success: false,
+        message: `Payment not completed. Status: ${paymentIntent.status}`,
+      });
+    }
+
+    const order = await Order.findOne({ _id: orderId, user: userId }).populate("items.product", "name price");
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    order.paymentStatus = "Completed";
+    order.paymentDetails = {
+      transactionId: paymentIntent.id,
+      status: "Completed",
+      method: "card",
+      amount: paymentIntent.amount / 100,
+      currency: paymentIntent.currency,
+      timestamp: new Date(),
+    };
+    order.status = "Processing";
+    await order.save();
+
+    const formattedOrder = {
+      _id: order._id,
+      orderNumber: order.orderNumber,
+      orderId: order.orderNumber,
+      totalAmount: order.totalAmount || 0,
+      subtotal: order.subtotal || 0,
+      deliveryCharge: order.deliveryCharge || 0,
+      status: order.status || "Pending",
+      paymentStatus: order.paymentStatus || "Pending",
+      paymentMethod: order.paymentMethod || "N/A",
+      paymentDetails: order.paymentDetails || { status: "Pending" },
+      shippingAddress: order.shippingAddress || {},
+      items: order.items || [],
+    };
+
+    // Send confirmation email for Stripe orders
+    const user = await User.findById(userId).select("name email membership");
+    if (user) {
+      try {
+        await sendOrderConfirmationEmail(formattedOrder, user);
+      } catch (emailError) {
+        logger.error(`Failed to send Stripe confirmation email for order ${order._id}: ${emailError.message}`);
+        // Don't fail the response, just log the email error
+      }
+    } else {
+      logger.warn(`User not found for email at ${new Date().toISOString()}: ${userId}`);
+    }
+
+    await User.findByIdAndUpdate(userId, { $set: { cart: [] } });
+
+    logger.info(`Payment confirmed successfully for order ${orderId} at ${new Date().toISOString()}`);
+    res.status(200).json({
+      success: true,
+      message: "Payment confirmed successfully",
+      order: formattedOrder,
+    });
+  } catch (error) {
+    logger.error(`Payment confirmation error at ${new Date().toISOString()}`, { message: error.message, stack: error.stack });
+    res.status(500).json({
+      success: false,
+      message: "Payment confirmation failed",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  createPaymentIntent,
+  createMembershipPaymentIntent,
+  confirmPayment,
+};

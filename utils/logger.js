@@ -5,6 +5,7 @@ const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
+    winston.format.errors({ stack: true }), // Always include stack traces for errors
     winston.format.json()
   ),
   transports: [
@@ -13,10 +14,17 @@ const logger = winston.createLogger({
   ],
 });
 
+// Console transport for development (with colors)
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
+    ),
   }));
+} else {
+  // Optional: Add console in production for critical logs (uncomment if needed)
+  // logger.add(new winston.transports.Console({ level: 'error', format: winston.format.simple() }));
 }
 
 module.exports = logger;

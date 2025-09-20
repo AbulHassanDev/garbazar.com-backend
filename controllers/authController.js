@@ -1,26 +1,26 @@
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 const User = require("../models/User");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const logger = require("../utils/logger");
+const { sendPasswordResetEmail } = require("../utils/email");
 
-// Configure nodemailer for Gmail
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE, // 'gmail' from .env
-  auth: {
-    user: process.env.EMAIL_USER, // malikabulhassan99@gmail.com
-    pass: process.env.EMAIL_PASS, // New app-specific password
-  },
-});
+const generateToken = (user) => {
+  return jwt.sign({ id: user._id, type: user.type }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+};
 
-// Register
 const register = async (req, res) => {
   const { name, email, password, phone, type } = req.body;
 
   try {
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ message: "User already exists" });
+      logger.warn(`Registration attempt with existing email at ${new Date().toISOString()}: ${email}`);
+      return res.status(400).json({ success: false, message: "User already exists" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -37,12 +37,7 @@ const register = async (req, res) => {
 
     await user.save();
 
-    const payload = {
-      id: user._id,
-      type: user.type,
-    };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
-
+    const token = generateToken(user);
     const userData = {
       id: user._id,
       name: user.name,
@@ -52,34 +47,31 @@ const register = async (req, res) => {
       membership: user.membership,
     };
 
-    res.status(201).json({ token, user: userData });
+    logger.info(`User registered at ${new Date().toISOString()}: ${user._id}`);
+    res.status(201).json({ success: true, token, user: userData });
   } catch (error) {
-    console.error("Register error:", error.message);
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Register error at ${new Date().toISOString()}: ${error.message}`);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-// Login
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      logger.warn(`Login attempt with invalid email at ${new Date().toISOString()}: ${email}`);
+      return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      logger.warn(`Invalid password attempt for user at ${new Date().toISOString()}: ${email}`);
+      return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
-    const payload = {
-      id: user._id,
-      type: user.type,
-    };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
-
+    const token = generateToken(user);
     const userData = {
       id: user._id,
       name: user.name,
@@ -89,61 +81,43 @@ const login = async (req, res) => {
       membership: user.membership,
     };
 
-    res.status(200).json({ token, user: userData });
+    logger.info(`User logged in at ${new Date().toISOString()}: ${user._id}`);
+    res.status(200).json({ success: true, token, user: userData });
   } catch (error) {
-    console.error("Login error:", error.message);
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Login error at ${new Date().toISOString()}: ${error.message}`);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-// Forgot Password
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      logger.warn(`Password reset attempt for non-existent user at ${new Date().toISOString()}: ${email}`);
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // Generate reset token
     const resetToken = crypto.randomBytes(20).toString("hex");
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiry
+    user.resetPasswordExpires = Date.now() + 3600000;
     await user.save();
 
-    // Send reset email
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`; // Updated to frontend URL
-    const mailOptions = {
-      to: user.email,
-      from: process.env.EMAIL_USER,
-      subject: "Password Reset Request - Gil Groceries",
-      html: `
-        <p>Dear ${user.name},</p>
-        <p>You requested a password reset for your Gil Groceries account.</p>
-        <p>Please click the link below to reset your password:</p>
-        <a href="${resetUrl}">${resetUrl}</a>
-        <p>This link will expire in 1 hour.</p>
-        <p>If you did not request this, please ignore this email.</p>
-        <p>Best regards,<br>Gil Groceries Team</p>
-      `,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Email sending error:", error);
-        return res.status(500).json({ message: "Failed to send email" });
-      }
-      console.log("Email sent:", info.response);
-      res.status(200).json({ message: "Password reset email sent" });
-    });
+    try {
+      await sendPasswordResetEmail(user, resetToken);
+      logger.info(`Password reset email sent to ${user.email} at ${new Date().toISOString()}`);
+      res.status(200).json({ success: true, message: "Password reset email sent" });
+    } catch (emailError) {
+      logger.error(`Failed to send password reset email to ${user.email} at ${new Date().toISOString()}: ${emailError.message}`);
+      res.status(500).json({ success: false, message: "Failed to send password reset email" });
+    }
   } catch (error) {
-    console.error("Forgot password error:", error.message);
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Forgot password error at ${new Date().toISOString()}: ${error.message}`);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-// Reset Password
 const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
@@ -155,7 +129,8 @@ const resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired reset token" });
+      logger.warn(`Invalid or expired reset token at ${new Date().toISOString()}: ${token}`);
+      return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -164,89 +139,117 @@ const resetPassword = async (req, res) => {
     user.resetPasswordExpires = null;
     await user.save();
 
-    res.status(200).json({ message: "Password reset successfully" });
+    logger.info(`Password reset for user ${user._id} at ${new Date().toISOString()}`);
+    res.status(200).json({ success: true, message: "Password reset successfully" });
   } catch (error) {
-    console.error("Reset password error:", error.message);
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Reset password error at ${new Date().toISOString()}: ${error.message}`);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-// Get logged-in user
 const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      logger.warn(`User not found at ${new Date().toISOString()}: ${req.user.id}`);
+      return res.status(404).json({ success: false, message: "User not found" });
     }
-    
-    res.status(200).json({
+
+    if (user.membership?.isPro && user.membership.endDate < new Date()) {
+      user.membership.isPro = false;
+      user.membership.paymentStatus = "expired";
+      user.type = "normal";
+      await user.save();
+      logger.info(`Membership expired for user ${user._id} at ${new Date().toISOString()}`);
+    }
+
+    const userData = {
       id: user._id,
       name: user.name,
       email: user.email,
       phone: user.phone,
       type: user.type,
       membership: user.membership,
-    });
+    };
+
+    res.status(200).json({ success: true, user: userData });
   } catch (error) {
-    console.error("GetMe error:", error.message);
-    res.status(500).json({ message: "Server error" });
+    logger.error(`GetMe error at ${new Date().toISOString()}: ${error.message}`);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-// Upgrade to Pro
 const upgradeToPro = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const { paymentIntentId } = req.body;
+    const userId = req.user.id;
+
+    logger.info(`Upgrading user ${userId} to pro at ${new Date().toISOString()}`);
+
+    if (!paymentIntentId) {
+      logger.warn(`Missing paymentIntentId for user ${userId} at ${new Date().toISOString()}`);
+      return res.status(400).json({ success: false, message: "Payment intent ID required" });
+    }
+
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+    if (paymentIntent.status !== "succeeded") {
+      logger.warn(`Payment not successful for user ${userId} at ${new Date().toISOString()}: ${paymentIntent.status}`);
+      return res.status(400).json({ success: false, message: `Payment not successful. Status: ${paymentIntent.status}` });
+    }
+
+    if (paymentIntent.metadata.userId !== userId.toString()) {
+      logger.warn(`Unauthorized payment attempt for user ${userId} at ${new Date().toISOString()}`);
+      return res.status(403).json({ success: false, message: "Unauthorized payment" });
+    }
+
+    const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      logger.warn(`User not found at ${new Date().toISOString()}: ${userId}`);
+      return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    if (user.type === "pro") {
-      return res.status(400).json({ message: "User is already a pro member" });
+    if (user.membership?.isPro && user.membership?.endDate > new Date()) {
+      logger.warn(`User ${userId} already has active membership at ${new Date().toISOString()}`);
+      return res.status(400).json({ success: false, message: "User already has an active membership" });
     }
 
-    if (user.type === "admin") {
-      return res.status(400).json({ message: "Admins cannot upgrade to pro" });
+    const membershipType = paymentIntent.metadata.membershipType;
+    if (!["monthly", "annual"].includes(membershipType)) {
+      logger.warn(`Invalid membership type for user ${userId} at ${new Date().toISOString()}: ${membershipType}`);
+      return res.status(400).json({ success: false, message: "Invalid membership type" });
     }
 
-    user.type = "pro";
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setFullYear(startDate.getFullYear() + (membershipType === "annual" ? 1 : 0));
+    endDate.setMonth(startDate.getMonth() + (membershipType === "monthly" ? 1 : 0));
+
     user.membership = {
       isPro: true,
-      membershipType: req.body.membershipType || "monthly",
+      membershipType,
       paymentStatus: "completed",
-      startDate: new Date(),
-      endDate: new Date(
-        new Date().setFullYear(
-          new Date().getFullYear() + (req.body.membershipType === "annual" ? 1 : 0)
-        ).setMonth(
-          new Date().getMonth() + (req.body.membershipType === "monthly" ? 1 : 0)
-        )
-      ),
+      orderRefNum: paymentIntent.id,
+      startDate,
+      endDate,
     };
-
+    user.type = "pro";
     await user.save();
 
-    const payload = {
+    const userData = {
       id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
       type: user.type,
+      membership: user.membership,
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-    res.status(200).json({
-      message: "Account upgraded to Pro successfully",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        type: user.type,
-        membership: user.membership,
-      },
-      token,
-    });
+    const token = generateToken(user);
+    logger.info(`User ${userId} upgraded to pro at ${new Date().toISOString()}`);
+    res.status(200).json({ success: true, user: userData, token });
   } catch (error) {
-    console.error("Upgrade error:", error.message);
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Upgrade to pro error at ${new Date().toISOString()}: ${error.message}`);
+    res.status(500).json({ success: false, message: "Upgrade failed", error: error.message });
   }
 };
 
