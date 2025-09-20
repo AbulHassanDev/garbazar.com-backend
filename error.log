@@ -114,3 +114,4 @@
 {"level":"error","message":"Payment intent creation error at 2025-09-14T14:41:41.071Z An error occurred with our connection to Stripe. Request was retried 2 times.","stack":"Error: An error occurred with our connection to Stripe. Request was retried 2 times.\n    at H:\\E-Commerece Website\\server\\node_modules\\stripe\\cjs\\RequestSender.js:398:41\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-09-14T14:41:41.071Z"}
 {"level":"error","message":"Email sending failed at 2025-09-15T12:49:32.883Z: getaddrinfo ENOTFOUND smtp.gmail.com","timestamp":"2025-09-15T12:49:32.883Z"}
 {"level":"error","message":"Failed to send order update email for order 68c7ce983d9364ffaf5b634f: Failed to send email: getaddrinfo ENOTFOUND smtp.gmail.com","timestamp":"2025-09-15T12:49:32.884Z"}
+{"level":"error","message":"Cloudinary test error at 2025-09-20T04:34:29.108Z","timestamp":"2025-09-20T04:34:29.109Z"}
