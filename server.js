@@ -125,4 +125,4 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 5005;
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT} at ${new Date().toISOString()}`);
-});
+});// Fix Render root directory
