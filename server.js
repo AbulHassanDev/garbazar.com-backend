@@ -1,5 +1,4 @@
-
-require('dotenv').config({ path: 'H:\\E-Commerece Website\\server\\.env' });
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -96,10 +95,7 @@ app.post('/api/test-cloudinary', async (req, res) => {
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.MONGO_URI);
     logger.info(`MongoDB connected to: ${conn.connection.db.databaseName} at ${new Date().toISOString()}`);
     await seedAdmin();
   } catch (err) {
@@ -125,4 +121,4 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 5005;
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT} at ${new Date().toISOString()}`);
-});// Fix Render root directory
+});
