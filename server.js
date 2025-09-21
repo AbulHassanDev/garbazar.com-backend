@@ -12,9 +12,28 @@ const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const userRoutes = require("./routes/userRoutes");
 const seedAdmin = require("./utils/seedAdmin");
-const logger = require("./utils/logger"); 
+const logger = require("./utils/logger");
 
 const app = express();
+
+// Handle uncaught exceptions and rejections
+process.on('uncaughtException', (error) => {
+  logger.error(`Uncaught Exception at ${new Date().toISOString()}`, { 
+    message: error.message, 
+    stack: error.stack 
+  });
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error(`Unhandled Rejection at ${new Date().toISOString()}`, { 
+    reason: reason.message || reason, 
+    promise 
+  });
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
 
 // Validate environment variables
 const requiredEnvVars = [
@@ -30,8 +49,10 @@ const requiredEnvVars = [
   'EMAIL_PASS',
   'STRIPE_SECRET_KEY',
 ];
+
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
+    logger.error(`Environment variable ${varName} is not set at ${new Date().toISOString()}`);
     console.error(`Error: Environment variable ${varName} is not set.`);
     process.exit(1);
   }
@@ -52,11 +73,14 @@ console.log('Loaded Environment Variables at:', new Date().toISOString(), {
 });
 
 // Configure CORS
-app.use(cors({ origin: process.env.FRONTEND_URL }));
+app.use(cors({ 
+  origin: process.env.FRONTEND_URL,
+  credentials: true 
+}));
 
 // Parse JSON and URL-encoded bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -66,6 +90,15 @@ app.use((req, res, next) => {
     logger.info(`Request: ${req.method} ${req.path} - Status: ${res.statusCode} - Time: ${duration}ms at ${new Date().toISOString()}`);
   });
   next();
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    message: 'Server is running', 
+    timestamp: new Date().toISOString() 
+  });
 });
 
 // Routes
@@ -92,23 +125,44 @@ app.post('/api/test-cloudinary', async (req, res) => {
   }
 });
 
-// Connect to MongoDB
+// Connect to MongoDB and seed admin
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    
     logger.info(`MongoDB connected to: ${conn.connection.db.databaseName} at ${new Date().toISOString()}`);
+    console.log('MongoDB connected successfully to:', conn.connection.db.databaseName);
+    
+    // Seed admin after successful connection
     await seedAdmin();
+    logger.info(`Admin seeding completed at ${new Date().toISOString()}`);
+    console.log('Admin seeding completed');
+    
+    return conn;
   } catch (err) {
-    logger.error(`MongoDB connection error at ${new Date().toISOString()}`, { message: err.message, stack: err.stack });
+    logger.error(`MongoDB connection error at ${new Date().toISOString()}`, { 
+      message: err.message, 
+      stack: err.stack 
+    });
+    console.error('MongoDB connection error:', err.message);
     process.exit(1);
   }
 };
 
+// Initialize database connection
 connectDB();
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  logger.error(`Server error at ${new Date().toISOString()}`, { message: err.message, stack: err.stack, path: req.path, method: req.method });
+  logger.error(`Server error at ${new Date().toISOString()}`, { 
+    message: err.message, 
+    stack: err.stack, 
+    path: req.path, 
+    method: req.method 
+  });
   res.status(500).json({ message: 'Server error', error: err.message });
 });
 
@@ -118,7 +172,19 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-const PORT = process.env.PORT || 5005;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 10000;
+
+const server = app.listen(PORT, '0.0.0.0', () => {
   logger.info(`Server running on port ${PORT} at ${new Date().toISOString()}`);
+  console.log(`Server running on port ${PORT}`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received, shutting down gracefully');
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    mongoose.connection.close();
+    process.exit(0);
+  });
 });
