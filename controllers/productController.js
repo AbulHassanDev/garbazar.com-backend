@@ -5,6 +5,7 @@ const Category = require("../models/Category");
 const Subcategory = require("../models/Subcategory");
 const { cloudinary } = require("../utils/cloudinary");
 const logger = require("../utils/logger");
+const { escapeRegExp } = require("lodash");
 
 const generateSlug = (name) => {
   return name
@@ -20,40 +21,59 @@ const getProducts = async (req, res) => {
       limit = 10,
       category,
       subcategory,
-      search = "",
-      sort,
+      q = "", // Changed from 'search' to 'q' to match frontend
+      sortBy, // Changed from 'sort' to 'sortBy' to match frontend
       minPrice,
       maxPrice,
-      brands,
+      price, // Added for dynamic price ranges
+      brand, // Changed from 'brands' to 'brand' to match frontend
     } = req.query;
     const query = { status: "active" };
 
-    if (category) query.category = category;
-    if (subcategory) query.subcategory = subcategory;
-    if (search) {
-      query.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { sku: { $regex: search, $options: "i" } },
-      ];
+    if (category) query.category = { $in: category.split(",") }; // Support multiple categories
+    if (subcategory) query.subcategory = { $in: subcategory.split(",") };
+    if (q) {
+      const safeQuery = escapeRegExp(q);
+      if (safeQuery.length === 1) {
+        query.name = { $regex: `^${safeQuery}`, $options: "i" }; // First-letter filtering
+      } else {
+        query.$or = [
+          { name: { $regex: safeQuery, $options: "i" } },
+          { sku: { $regex: safeQuery, $options: "i" } },
+        ];
+      }
     }
-    if (minPrice || maxPrice) {
+    if (minPrice || maxPrice || price) {
       query.price = {};
       if (minPrice) query.price.$gte = parseFloat(minPrice);
       if (maxPrice) query.price.$lte = parseFloat(maxPrice);
+      if (price) {
+        const priceRanges = price.split(",");
+        const priceConditions = [];
+        if (priceRanges.includes("under500")) priceConditions.push({ price: { $lt: 500 } });
+        if (priceRanges.includes("500-1000")) priceConditions.push({ price: { $gte: 500, $lte: 1000 } });
+        if (priceRanges.includes("1000-5000")) priceConditions.push({ price: { $gte: 1000, $lte: 5000 } });
+        if (priceRanges.includes("above5000")) priceConditions.push({ price: { $gt: 5000 } });
+        if (priceConditions.length > 0) {
+          query.$or = [...(query.$or || []), ...priceConditions];
+          if (!query.$or) query.$or = priceConditions;
+        }
+      }
     }
-    if (brands) {
-      query.brand = { $in: brands.split(",") };
+    if (brand) {
+      query.brand = { $in: brand.split(",") };
     }
 
     console.log("Fetching products with query:", query, "Page:", page, "Limit:", limit);
     let sortOption = { createdAt: -1 };
-    if (sort === "featured") sortOption = { featured: -1, createdAt: -1 };
-    else if (sort === "name-asc") sortOption = { name: 1 };
-    else if (sort === "name-desc") sortOption = { name: -1 };
-    else if (sort === "price-asc") sortOption = { price: 1 };
-    else if (sort === "price-desc") sortOption = { price: -1 };
-    else if (sort === "stock-asc") sortOption = { stock: 1 };
-    else if (sort === "stock-desc") sortOption = { stock: -1 };
+    if (sortBy === "relevance") sortOption = { createdAt: -1 };
+    else if (sortBy === "price-low-high") sortOption = { price: 1 }; // Updated to match frontend
+    else if (sortBy === "price-high-low") sortOption = { price: -1 };
+    else if (sortBy === "newest") sortOption = { createdAt: -1 };
+    else if (sortBy === "name-asc") sortOption = { name: 1 };
+    else if (sortBy === "name-desc") sortOption = { name: -1 };
+    else if (sortBy === "stock-asc") sortOption = { stock: 1 };
+    else if (sortBy === "stock-desc") sortOption = { stock: -1 };
 
     const products = await Product.find(query)
       .populate("category", "name slug")
@@ -74,6 +94,68 @@ const getProducts = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching products:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const getProductSuggestions = async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) return res.status(200).json({ suggestions: [] });
+
+    const safeQuery = escapeRegExp(q);
+    const query = {
+      name: { $regex: safeQuery, $options: "i" },
+      status: "active",
+    };
+
+    const products = await Product.find(query)
+      .select("name")
+      .limit(5)
+      .sort({ name: 1 });
+
+    const suggestions = products.map((p) => p.name);
+    res.status(200).json({ suggestions });
+  } catch (error) {
+    console.error("Error fetching product suggestions:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const getProductBrands = async (req, res) => {
+  try {
+    const brands = await Product.distinct("brand", { status: "active" });
+    res.status(200).json(brands.filter((brand) => brand));
+  } catch (error) {
+    console.error("Error fetching brands:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const getPriceRanges = async (req, res) => {
+  try {
+    const products = await Product.find({ status: "active" }).select("price");
+    const prices = products.map((p) => p.price).filter((p) => p !== null && p !== undefined);
+
+    if (prices.length === 0) {
+      return res.status(200).json([]);
+    }
+
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    // Define dynamic price ranges based on min/max
+    const ranges = [];
+    if (minPrice < 500) ranges.push({ value: "under500", label: "Under PKR 500", min: 0, max: 500 });
+    if (minPrice <= 1000 && maxPrice >= 500)
+      ranges.push({ value: "500-1000", label: "PKR 500 - 1000", min: 500, max: 1000 });
+    if (minPrice <= 5000 && maxPrice >= 1000)
+      ranges.push({ value: "1000-5000", label: "PKR 1000 - 5000", min: 1000, max: 5000 });
+    if (maxPrice > 5000) ranges.push({ value: "above5000", label: "Above PKR 5000", min: 5000, max: Infinity });
+
+    res.status(200).json(ranges);
+  } catch (error) {
+    console.error("Error fetching price ranges:", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -470,4 +552,7 @@ module.exports = {
   getSeasonalProducts,
   getRelatedProducts,
   getProductCount,
+  getProductSuggestions,
+  getProductBrands,
+  getPriceRanges,
 };

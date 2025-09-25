@@ -1,4 +1,3 @@
-
 const express = require("express");
 const router = express.Router();
 const {
@@ -11,12 +10,19 @@ const {
   getSeasonalProducts,
   getRelatedProducts,
   getProductCount,
+  getProductSuggestions,
+  getProductBrands,
+  getPriceRanges,
 } = require("../controllers/productController");
 const { protect, authMiddleware } = require("../middleware/auth");
 const { uploadArray } = require("../utils/cloudinary");
 
 // Public Routes: Accessible to all users
-router.get("/", getProducts); // Fetch all products
+router.get("/", getProducts); // Fetch all products or search results
+router.get("/search", getProducts); // Explicit search endpoint
+router.get("/suggestions", getProductSuggestions); // Fetch search suggestions
+router.get("/brands", getProductBrands); // Fetch unique brands
+router.get("/price-ranges", getPriceRanges); // Fetch dynamic price ranges
 router.get("/count", protect, authMiddleware("admin"), getProductCount); // Fetch product count
 router.get("/featured", getFeaturedProducts); // Fetch featured products
 router.get("/seasonal", getSeasonalProducts); // Fetch seasonal products
